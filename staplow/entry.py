@@ -13,7 +13,24 @@ Options:
 
 """
 from docopt import docopt
+from sh import iptables
+
 
 def console():
-    arguments = docopt(__doc__, version='Staplow 0.1')
-    print(arguments)
+    args = docopt(__doc__, version='Staplow 0.1')
+
+    if args['init']:
+        init(args)
+    if args['add']:
+        add(args)
+    
+
+def init(args):
+    iptables.bake("-t", "mangle")
+    chains_to_add = ("staplow_in", "staplow_out")
+    for chains in chains_to_add:
+        iptables("-N", chains)
+
+
+def add(args):
+    pass
