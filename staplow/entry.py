@@ -45,12 +45,11 @@ def console():
         delete(args)
 
 def init(args):
-    Table("mangle")
-    Table("mangle")
-    Table("mangle")
-    Table("mangle")
-    Table("mangle")
+    mangle = Table("mangle")
     for interface in interfaces:
+        mangle.create_chain("{0}_{1}_{2}".format("staplow", "in", interface))
+        mangle.create_chain("{0}_{1}_{2}".format("staplow", "out", interface))
+
         ipt_mangle("-N", "{0}_{1}_{2}".format("staplow", "in", interface))
         ipt_mangle("-N", "{0}_{1}_{2}".format("staplow", "out", interface))
         ipt_mangle("-A", "INPUT", "-i", interface, "-j", "{0}_{1}_{2}".format("staplow", "in", interface))

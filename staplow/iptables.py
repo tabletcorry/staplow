@@ -38,6 +38,8 @@ class Table(object):
 
         Table._find_table(name)
 
+        self.chains = Table.table_bodies[name].chains
+
         self.exe = iptables.bake("-t", name)
 
 
